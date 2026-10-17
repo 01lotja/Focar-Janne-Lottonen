@@ -2,6 +2,7 @@
 from machine import Pin, PWM
 from time import sleep
 
+
 # Moottori A
 e1 = PWM(Pin(28))
 m1 = Pin(27, Pin.OUT)
@@ -64,7 +65,7 @@ def taakse():
 
 # Odota ennen lähtöä
 pysayta()
-sleep(5)
+sleep(10)
 
 # 1. Aja eteenpäin
 eteen()
