@@ -2,8 +2,6 @@
 from machine import Pin, PWM
 from time import sleep
 
-from main import pysayta
-
 
 # Moottori A
 e1 = PWM(Pin(28))
@@ -20,12 +18,16 @@ e2.freq(1000)
 nopeus = 32767
 
 #Aika liikkumiseen
-eteenAika = 1.00
-taakseAika = 0.5
-vasenAika = 0.4
-oikeaAika = 0.4
+eteenAika = 3.0
+taakseAika = 1.2
+vasen45Aika = 0.7
+vasen90Aika = 1.6
 
-
+#Funktio ohjeet toiminnoille pysäytä
+def pysayta():
+    e1.duty_u16(1)
+    e2.duty_u16(1)
+    sleep(1)
 
 #Eteenpäin liikkuminen
 def eteen():
@@ -34,7 +36,7 @@ def eteen():
     e1.duty_u16(nopeus)
     e2.duty_u16(nopeus)
     sleep(eteenAika)
-    sleep()
+    pysayta()
 
 #Vasemmalle käännös
 def vasen45():
@@ -42,26 +44,26 @@ def vasen45():
     m2.value(1)
     e1.duty_u16(nopeus)
     e2.duty_u16(nopeus)
-    sleep(vasenAika)
-    sleep()
+    sleep(vasen45Aika)
+    pysayta()
 
 #Oikealle käännös
-def oikea45():
-    m1.value(1)
-    m2.value(0)
+def vasen90():
+    m1.value(0)
+    m2.value(1)
     e1.duty_u16(nopeus)
     e2.duty_u16(nopeus)
-    sleep(oikeaAika)
-    sleep()
+    sleep(vasen90Aika)
+    pysayta()
 
-#taaksepäin liikkuminen tarvittaessa
+#Taaksepäin liikkuminen
 def taakse():
     m1.value(0)
     m2.value(0)
     e1.duty_u16(nopeus)
     e2.duty_u16(nopeus)
     sleep(taakseAika)
-    sleep()
+    pysayta()
 
 #Aloita liikkuminen eteen, 3 pisteen käännös ja palautus lähtöön
 
@@ -78,14 +80,13 @@ vasen45()
 # 3. Peruuta
 taakse()
 
-# 4. Käännä keula takaisin
-oikea45()
+# 4. Käännä keula takaisin tulo suuntaan
+vasen90()
 
-# 5. Aja takaisin ajolinjalle
-eteen()
+# 5. Palaa takaisin ajolinjalle
+taakse()
 
-# 7. Palaa lähtöpisteeseen
-eteen()
+# 6. Palaa lähtöpisteeseen
 eteen()
 
 sleep()
