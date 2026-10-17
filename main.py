@@ -2,6 +2,8 @@
 from machine import Pin, PWM
 from time import sleep
 
+from main import pysayta
+
 
 # Moottori A
 e1 = PWM(Pin(28))
@@ -32,7 +34,7 @@ def eteen():
     e1.duty_u16(nopeus)
     e2.duty_u16(nopeus)
     sleep(eteenAika)
-    pysayta()
+    sleep()
 
 #Vasemmalle käännös
 def vasen45():
@@ -41,7 +43,7 @@ def vasen45():
     e1.duty_u16(nopeus)
     e2.duty_u16(nopeus)
     sleep(vasenAika)
-    pysayta()
+    sleep()
 
 #Oikealle käännös
 def oikea45():
@@ -50,7 +52,7 @@ def oikea45():
     e1.duty_u16(nopeus)
     e2.duty_u16(nopeus)
     sleep(oikeaAika)
-    pysayta()
+    sleep()
 
 #taaksepäin liikkuminen tarvittaessa
 def taakse():
@@ -59,7 +61,7 @@ def taakse():
     e1.duty_u16(nopeus)
     e2.duty_u16(nopeus)
     sleep(taakseAika)
-    pysayta()
+    sleep()
 
 #Aloita liikkuminen eteen, 3 pisteen käännös ja palautus lähtöön
 
@@ -86,4 +88,4 @@ eteen()
 eteen()
 eteen()
 
-pysayta()
+sleep()
